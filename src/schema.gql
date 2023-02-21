@@ -1,0 +1,81 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Item {
+  id: ID!
+  name: String!
+  quantity: Float!
+  quantityUnits: String
+}
+
+type User {
+  id: ID!
+  fullName: String!
+  email: String!
+  roles: [String!]!
+  isActive: Boolean!
+  lastUpdateBy: User
+}
+
+type AuthResponse {
+  token: String!
+  user: User!
+}
+
+type Query {
+  refreshToken: AuthResponse!
+  users(roles: [ValidRoles!] = []): [User!]!
+  user(id: ID!): User!
+  items: [Item!]!
+  item(id: ID!): Item!
+}
+
+enum ValidRoles {
+  admin
+  user
+  super_user
+}
+
+type Mutation {
+  signup(signUpInput: SignUpInput!): AuthResponse!
+  signin(signInInput: SignInInput!): AuthResponse!
+  updateUser(updateUserInput: UpdateUserInput!): User!
+  blockUser(id: ID!): User!
+  createItem(createItemInput: CreateItemInput!): Item!
+  updateItem(updateItemInput: UpdateItemInput!): Item!
+  removeItem(id: ID!): Item!
+}
+
+input SignUpInput {
+  email: String!
+  fullName: String!
+  password: String!
+}
+
+input SignInInput {
+  email: String!
+  password: String!
+}
+
+input UpdateUserInput {
+  email: String
+  fullName: String
+  password: String
+  id: ID!
+  roles: [ValidRoles!]
+  isActive: Boolean
+}
+
+input CreateItemInput {
+  name: String!
+  quantity: Float!
+  quantityUnits: String
+}
+
+input UpdateItemInput {
+  name: String
+  quantity: Float
+  quantityUnits: String
+  id: ID!
+}
